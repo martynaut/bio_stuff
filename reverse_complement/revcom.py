@@ -1,8 +1,10 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
+import re
 
 
 def rev_comp_change(change_type, NA, seq):
+    whitespaces = re.compile(r'\s+')
+    seq = whitespaces.sub('', seq)
+    print(seq)
     for i in seq.upper():
         if i not in ['A', 'T', 'C', 'G', 'U']:
             return 'wrong sequence'
