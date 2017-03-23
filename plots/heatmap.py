@@ -42,19 +42,23 @@ print(new_index)
 #data2 = data.df.set_index(miR_list[data.index.values])
 data['new_index'] = new_index
 data.set_index('new_index', inplace=True)
-data.sort_index(inplace=True, ascending = False)
+data.sort_index(inplace=True, ascending = True)
 print(data)
-mean = data.max(axis=1)
+# data = np.log2(data)
+mean = data.median(axis=1)
+maximal = data.max(axis=1)-data.median(axis=1)
 # print(pd.DataFrame(mean))
 # data2 = data.div(pd.DataFrame(mean), axis = 'rows')
 indexes = data.index
 #print(indexes)
 for i in indexes:
-    data.loc[i] = data.loc[i]/mean.loc[i]
+    data.loc[i] = (data.loc[i]-mean.loc[i])/maximal.loc[i]
 
 print (data.index)
-
-plt.imshow(data, interpolation=None)
+# a = plt.pcolor(data, cmap=plt.cm.seismic)
+Fig=plt.figure(tight_layout=True, figsize=(10, 5))
+ax = Fig.add_subplot(1, 1, 1)
+a = ax.imshow(data, cmap=plt.get_cmap('PRGn'), interpolation=None, vmin=-1, vmax=1)
 # plt.xlabel('patients')
 plt.ylabel('miRNAs')
 plt.text(3, 20, 'Control')
@@ -63,6 +67,8 @@ plt.xlim(-0.5, 29.5)
 plt.xticks(np.linspace(0, 29, 30, endpoint=True), probes, rotation='vertical')
 plt.ylim(12.5, -0.5)
 plt.yticks(np.linspace(0, 12, 13, endpoint=True), mirs)
-
-plt.colorbar()
+Fig.colorbar(a, shrink=0.3)
 plt.show()
+
+
+Fig.savefig('heatmap_python.png')
