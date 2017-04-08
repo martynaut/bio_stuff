@@ -39,6 +39,7 @@ translation_code_vert_mit = {
     'TAC': 'Y', 'TAT': 'Y', 'TAA': '_', 'TAG': '_',
     'TGC': 'C', 'TGT': 'C', 'TGA': 'W', 'TGG': 'W',
 }
+
 # two codons are absent!
 translation_code_yeast_mit = {
     'ATA': 'M', 'ATC': 'I', 'ATT': 'I', 'ATG': 'M',
