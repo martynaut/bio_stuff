@@ -5,7 +5,17 @@ from translate_dicts import translation_code
 import regex as re
 
 
-def translate(sequence, start=False, Frame='all'):
+def translate_handler(sequence, start=False, Frame='all', code='translation_code', reverse=True)
+    if reverse == True:
+        return translate(sequence, start=start, Frame=Frame, code=code),
+               translate(sequence[::-1], start=start, Frame=Frame, code=code)
+    else:
+        return translate(sequence, start=start, Frame=Frame, code=code)
+
+
+def translate(sequence, start=False, Frame='all', code='translation_code'):
+    if code == 'translation_code':
+        code_dict = translation_code
     if Frame == 'all':
         frames = [0, 1, 2]
     else:
@@ -20,7 +30,7 @@ def translate(sequence, start=False, Frame='all'):
             for i in range(0, len(j), 3):
                 prot_sequences[len(prot_sequences)-1] =\
                     prot_sequences[len(prot_sequences)-1] +\
-                    translation_code[j[i:i+3]]
+                    code_dict[j[i:i+3]]
                 if len(j[i+3+1:]) < 3:
                     break
     else:
@@ -28,7 +38,7 @@ def translate(sequence, start=False, Frame='all'):
         for j in frames:
             for i in range(j, len(sequence), 3):
                 prot_sequences[j] = prot_sequences[j] +\
-                                    translation_code[sequence[i:i+3]]
+                                    code_dict[sequence[i:i+3]]
                 if len(sequence[i+3+1:]) < 3:
                     break
 
